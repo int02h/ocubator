@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+ext {
+    versions = [
+            'teapt': '1.0-SNAPSHOT',
+            'junit': '4.12',
+    ]
+}
+
+group 'com.dpforge'
+version versions.teaptVersion
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile "junit:junit:versions.${versions.junit}"
+}
