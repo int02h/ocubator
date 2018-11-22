@@ -4,13 +4,13 @@ plugins {
 
 ext {
     versions = [
-            'teapt': '1.0-SNAPSHOT',
+            'ocubator': '1.0.0',
             'junit': '4.12',
     ]
 }
 
 group 'com.dpforge'
-version versions.teaptVersion
+version versions.ocubator
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -19,5 +19,5 @@ repositories {
 }
 
 dependencies {
-    testCompile "junit:junit:versions.${versions.junit}"
+    testCompile "junit:junit:${versions.junit}"
 }
