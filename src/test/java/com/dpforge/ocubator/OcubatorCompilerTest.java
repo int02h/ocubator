@@ -31,6 +31,15 @@ public class OcubatorCompilerTest {
     }
 
     @Test
+    public void twoSources() {
+        CompilationResult result = OcubatorCompiler.compile()
+                .sourceCode("class Foo {}")
+                .sourceCode("class Bar { Foo foo; }")
+                .please();
+        assertTrue(result.isSuccess());
+    }
+
+    @Test
     public void withErrors() {
         CompilationResult result = OcubatorCompiler.compile()
                 .sourceCode("" +

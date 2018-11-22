@@ -6,12 +6,12 @@ import java.util.List;
 
 public class CompilationTask {
 
-    String sourceCode;
+    final List<String> sources = new ArrayList<>();
 
     final List<Processor> processors = new ArrayList<>();
 
     public CompilationTask sourceCode(final String sourceCode) {
-        this.sourceCode = sourceCode;
+        sources.add(sourceCode);
         return this;
     }
 
