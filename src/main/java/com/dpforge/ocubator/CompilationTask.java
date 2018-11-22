@@ -6,9 +6,15 @@ import java.util.List;
 
 public class CompilationTask {
 
+    private final TaskCompiler compiler;
+
     final List<String> sources = new ArrayList<>();
 
     final List<Processor> processors = new ArrayList<>();
+
+    CompilationTask(final TaskCompiler compiler) {
+        this.compiler = compiler;
+    }
 
     public CompilationTask sourceCode(final String sourceCode) {
         sources.add(sourceCode);
@@ -21,6 +27,6 @@ public class CompilationTask {
     }
 
     public CompilationResult please() {
-        return OcubatorCompiler.compile(this);
+        return compiler.compileTask(this);
     }
 }

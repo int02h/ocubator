@@ -8,16 +8,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class OcubatorCompiler {
+public class OcubatorCompiler implements TaskCompiler {
 
     private OcubatorCompiler() {
     }
 
     public static CompilationTask compile() {
-        return new CompilationTask();
+        return new CompilationTask(new OcubatorCompiler());
     }
 
-    static CompilationResult compile(final CompilationTask task) {
+    @Override
+    public CompilationResult compileTask(final CompilationTask task) {
         final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         final CompilationDiagnostics diagnostics = new CompilationDiagnostics();
 
@@ -49,5 +50,4 @@ public class OcubatorCompiler {
         }
         return result;
     }
-
 }
