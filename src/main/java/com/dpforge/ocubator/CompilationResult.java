@@ -1,7 +1,9 @@
 package com.dpforge.ocubator;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CompilationResult {
 
@@ -10,11 +12,18 @@ public class CompilationResult {
     private final List<CompilationError> errors;
     private final ClassLoader classLoader;
 
+    private final Map<String, GeneratedFile> generatedFilePathMap;
+
     private CompilationResult(final Builder builder) {
         success = builder.success;
         generatedFiles = builder.generatedFiles;
         errors = builder.errors;
         classLoader = builder.classLoader;
+
+        generatedFilePathMap = new HashMap<>(generatedFiles.size());
+        for (GeneratedFile file : generatedFiles) {
+            generatedFilePathMap.put(file.getPath(), file);
+        }
     }
 
     public boolean isSuccess() {
@@ -23,6 +32,10 @@ public class CompilationResult {
 
     public List<GeneratedFile> getGeneratedFiles() {
         return generatedFiles;
+    }
+
+    public GeneratedFile getGeneratedFile(final String path) {
+        return generatedFilePathMap.get(path);
     }
 
     public List<CompilationError> getErrors() {
