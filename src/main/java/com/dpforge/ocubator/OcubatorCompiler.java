@@ -2,6 +2,7 @@ package com.dpforge.ocubator;
 
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
+import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,6 +39,7 @@ public class OcubatorCompiler implements TaskCompiler {
                 .success(javacTask.call())
                 .generatedFiles(fileManager.getGeneratedFiles())
                 .errors(diagnostics.getErrors())
+                .classLoader(fileManager.getClassLoader(StandardLocation.CLASS_OUTPUT))
                 .build();
     }
 

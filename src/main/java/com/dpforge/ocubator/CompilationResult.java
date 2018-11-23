@@ -8,11 +8,13 @@ public class CompilationResult {
     private final boolean success;
     private final List<GeneratedFile> generatedFiles;
     private final List<CompilationError> errors;
+    private final ClassLoader classLoader;
 
     private CompilationResult(final Builder builder) {
         success = builder.success;
         generatedFiles = builder.generatedFiles;
         errors = builder.errors;
+        classLoader = builder.classLoader;
     }
 
     public boolean isSuccess() {
@@ -27,6 +29,11 @@ public class CompilationResult {
         return errors;
     }
 
+    public InstanceCreator newInstanceOf(final String qualifiedName) throws ClassNotFoundException {
+        final Class<?> clazz = Class.forName(qualifiedName, true, classLoader);
+        return new InstanceCreator(clazz);
+    }
+
     static Builder newBuilder() {
         return new Builder();
     }
@@ -35,6 +42,7 @@ public class CompilationResult {
         private boolean success;
         private List<CompilationError> errors = Collections.emptyList();
         private List<GeneratedFile> generatedFiles = Collections.emptyList();
+        private ClassLoader classLoader;
 
         Builder success(final boolean success) {
             this.success = success;
@@ -48,6 +56,11 @@ public class CompilationResult {
 
         Builder errors(final List<CompilationError> errors) {
             this.errors = errors;
+            return this;
+        }
+
+        Builder classLoader(final ClassLoader classLoader) {
+            this.classLoader = classLoader;
             return this;
         }
 
