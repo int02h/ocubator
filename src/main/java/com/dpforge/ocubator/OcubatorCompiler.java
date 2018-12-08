@@ -9,11 +9,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Entry point for testing source code compilation with annotation processors
+ */
 public class OcubatorCompiler implements TaskCompiler {
 
     private OcubatorCompiler() {
     }
 
+    /**
+     * Returns builder that creates compilation task
+     */
     public static CompilationTask compile() {
         return new CompilationTask(new OcubatorCompiler());
     }
