@@ -1,7 +1,10 @@
 package com.dpforge.ocubator;
 
-import javax.tools.*;
-import java.io.*;
+import javax.tools.FileObject;
+import javax.tools.ForwardingJavaFileManager;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.StandardLocation;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
