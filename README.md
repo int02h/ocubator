@@ -1,5 +1,6 @@
 # ocubator
 [![Build Status](https://travis-ci.com/int02h/ocubator.svg?branch=master)](https://travis-ci.com/int02h/ocubator)
+[![Coverage Status](https://coveralls.io/repos/github/int02h/ocubator/badge.svg?branch=master)](https://coveralls.io/github/int02h/ocubator?branch=master)
 
 Ocubator is very polite tool for testing Java annotation processors. Just say 'please' and it will do everything you want.
 
