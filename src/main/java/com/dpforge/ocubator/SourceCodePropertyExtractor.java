@@ -9,6 +9,9 @@ class SourceCodePropertyExtractor {
 
     private static final Pattern CLASS_NAME_PATTERN = Pattern.compile("class\\s+([a-zA-z_]\\w*)");
 
+    private SourceCodePropertyExtractor() {
+    }
+
     static String extractPackage(final String sourceCode) {
         final Matcher matcher = PACKAGE_PATTERN.matcher(sourceCode);
         return matcher.find() ? matcher.group(1) : "";
