@@ -42,10 +42,10 @@ public class OcubatorCompilerTest {
     @Test
     public void withErrors() {
         CompilationResult result = OcubatorCompiler.compile()
-                .sourceCode("" +
-                        "package test;\n" +
-                        "class Foo {\n" +
-                        "    int value\n" +
+                .sourceCode(
+                        "package test;",
+                        "class Foo {",
+                        "    int value",
                         "}")
                 .please();
         assertFalse(result.isSuccess());
@@ -59,9 +59,9 @@ public class OcubatorCompilerTest {
     @Test
     public void withProcessor() {
         CompilationResult result = OcubatorCompiler.compile()
-                .sourceCode("" +
-                        "import com.dpforge.ocubator.OcubatorCompilerTest.TestAnnotation;\n"+
-                        "@TestAnnotation\n" +
+                .sourceCode(
+                        "import com.dpforge.ocubator.OcubatorCompilerTest.TestAnnotation;",
+                        "@TestAnnotation",
                         "class Foo {}")
                 .withProcessor(new TestProcessor())
                 .please();

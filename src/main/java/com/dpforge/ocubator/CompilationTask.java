@@ -18,10 +18,11 @@ public class CompilationTask {
 
     /**
      * Adds source code to the compilation task
-     * @param sourceCode full Java file with package, imports and other code
+     * @param lines whole Java file with package, imports and other code.
+     *              All lines will be concatenated in a single string with {@code '\n'} delimiter.
      */
-    public CompilationTask sourceCode(final String sourceCode) {
-        sources.add(sourceCode);
+    public CompilationTask sourceCode(final String... lines) {
+        sources.add(String.join("\n", lines));
         return this;
     }
 
