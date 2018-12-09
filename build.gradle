@@ -34,3 +34,6 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
+apply from: rootProject.file('gradle/maven-java-prepare.gradle')
+apply from: rootProject.file('gradle/maven-publish.gradle')
