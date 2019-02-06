@@ -5,6 +5,7 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +36,7 @@ public class OcubatorCompiler implements TaskCompiler {
         final JavaCompiler.CompilationTask javacTask = compiler.getTask(null,
                 fileManager,
                 diagnostics,
-                null,
+                collectCompilationOptions(task),
                 null,
                 collectSources(task));
 
@@ -57,5 +58,9 @@ public class OcubatorCompiler implements TaskCompiler {
             result.add(InMemoryFileManager.createSourceFile(packageName, className, sourceCode));
         }
         return result;
+    }
+
+    static Collection<String> collectCompilationOptions(final CompilationTask task) {
+        return Arrays.asList("-sourcepath", String.join(";", task.sourcePathList));
     }
 }

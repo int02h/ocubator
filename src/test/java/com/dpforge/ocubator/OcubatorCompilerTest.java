@@ -1,6 +1,8 @@
 package com.dpforge.ocubator;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
@@ -9,18 +11,25 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.JavaFileObject;
+import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
 import static org.junit.Assert.*;
 
 public class OcubatorCompilerTest {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void success() {
@@ -71,6 +80,30 @@ public class OcubatorCompilerTest {
         final GeneratedFile file = result.getGeneratedFiles().get(0);
         assertEquals("test/Generated.java", file.getPath());
         assertEquals(TestProcessor.GENERATED_CONTENT, file.getContent());
+    }
+
+    @Test
+    public void withSourcePath() throws IOException {
+        final File sourceDir = folder.newFolder("com", "test");
+        final File bar = new File(sourceDir, "Bar.java");
+        Files.write(bar.toPath(), Arrays.asList("package com.test;", "public class Bar {}"));
+
+        CompilationTask task = OcubatorCompiler.compile()
+                .sourceCode(
+                        "import com.test.Bar;",
+                        "class Foo {}");
+        assertFalse(task.please().isSuccess());
+
+        task.sourcePath(sourceDir.getParentFile().getParentFile());
+        assertTrue(task.please().isSuccess());
+    }
+
+    @Test
+    public void options() {
+        Collection<String> options = OcubatorCompiler.collectCompilationOptions(OcubatorCompiler.compile()
+                .sourcePath("/a/b/c")
+                .sourcePath(new File("/some/path")));
+        assertEquals(Arrays.asList("-sourcepath", "/a/b/c;/some/path"), options);
     }
 
     @SuppressWarnings("unused")

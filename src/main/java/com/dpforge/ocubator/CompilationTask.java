@@ -1,6 +1,7 @@
 package com.dpforge.ocubator;
 
 import javax.annotation.processing.Processor;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,8 @@ public class CompilationTask {
     private final TaskCompiler compiler;
 
     final List<String> sources = new ArrayList<>();
+
+    final List<String> sourcePathList = new ArrayList<>();
 
     final List<Processor> processors = new ArrayList<>();
 
@@ -23,6 +26,24 @@ public class CompilationTask {
      */
     public CompilationTask sourceCode(final String... lines) {
         sources.add(String.join("\n", lines));
+        return this;
+    }
+
+    /**
+     * Adds the source code path to search for class or interface definitions (-sourcepath options of javac)
+     * @param file that specifies the source code path
+     */
+    public CompilationTask sourcePath(final File file) {
+        sourcePath(file.getAbsolutePath());
+        return this;
+    }
+
+    /**
+     * Same as {@link #sourcePath(File)} but the path is specified as a string
+     * @param sourcePath source code path
+     */
+    public CompilationTask sourcePath(final String sourcePath) {
+        sourcePathList.add(sourcePath);
         return this;
     }
 
