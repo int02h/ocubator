@@ -28,17 +28,17 @@ Get the latest version of the Ocubator library with Maven
 <dependency>
   <groupId>com.dpforge</groupId>
   <artifactId>ocubator</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
 or Gradle
 ```groovy
-compile 'com.dpforge:ocubator:1.0.0'
+compile 'com.dpforge:ocubator:1.1.0'
 ```
 
 License
 -------
-Copyright (c) 2018 Daniil Popov
+Copyright (c) 2019 Daniil Popov
 
 Licensed under the [MIT](LICENSE) License.
