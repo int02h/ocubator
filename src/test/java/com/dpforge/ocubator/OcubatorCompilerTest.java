@@ -106,6 +106,19 @@ public class OcubatorCompilerTest {
         assertEquals(Arrays.asList("-sourcepath", "/a/b/c;/some/path"), options);
     }
 
+    @Test
+    public void instantiateGeneratedClass() throws Exception {
+        CompilationResult result = OcubatorCompiler.compile()
+                .sourceCode(
+                        "import com.dpforge.ocubator.OcubatorCompilerTest.TestAnnotation;",
+                        "@TestAnnotation",
+                        "class Foo {}")
+                .withProcessor(new TestProcessor())
+                .please();
+        assertTrue(result.isSuccess());
+        assertNotNull(result.newInstanceOf("Foo").withConstructor());
+    }
+
     @SuppressWarnings("unused")
     @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.TYPE)

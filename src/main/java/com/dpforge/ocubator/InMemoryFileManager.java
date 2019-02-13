@@ -31,6 +31,18 @@ class InMemoryFileManager extends ForwardingJavaFileManager<StandardJavaFileMana
         return getMemoryFile(toJavaFileUri(location, className, kind), kind);
     }
 
+    @Override
+    public ClassLoader getClassLoader(final Location location) {
+        return new ClassLoader(InMemoryFileManager.class.getClassLoader()) {
+            @Override
+            protected Class<?> findClass(final String name) {
+                URI classUri = toJavaFileUri(location, name, JavaFileObject.Kind.CLASS);
+                final byte[] byteArray = getMemoryFile(classUri, JavaFileObject.Kind.CLASS).getContentAsByteArray();
+                return super.defineClass(name, byteArray, 0, byteArray.length);
+            }
+        };
+    }
+
     List<GeneratedFile> getGeneratedFiles() {
         final List<GeneratedFile> result = new ArrayList<>(memory.size());
         for (Map.Entry<URI, InMemoryFile> entry : memory.entrySet()) {
@@ -58,7 +70,7 @@ class InMemoryFileManager extends ForwardingJavaFileManager<StandardJavaFileMana
         return URI.create("memory:///" + location.getName() + '/' + className.replace('.', '/') + kind.extension);
     }
 
-    private JavaFileObject getMemoryFile(final URI uri, final JavaFileObject.Kind kind) {
+    private InMemoryFile getMemoryFile(final URI uri, final JavaFileObject.Kind kind) {
         return memory.computeIfAbsent(uri, computeUri -> new InMemoryFile(computeUri, kind));
     }
 }

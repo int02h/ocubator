@@ -19,10 +19,14 @@ class InMemoryFile extends SimpleJavaFileObject {
     }
 
     String getContentAsString() {
+        return new String(getContentAsByteArray());
+    }
+
+    byte[] getContentAsByteArray() {
         if (data == null) {
             throw new NullPointerException("Cannot get content. File not found");
         }
-        return new String(data);
+        return data;
     }
 
     @Override
