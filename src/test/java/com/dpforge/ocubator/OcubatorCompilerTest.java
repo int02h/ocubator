@@ -107,6 +107,12 @@ public class OcubatorCompilerTest {
     }
 
     @Test
+    public void emptyOptions() {
+        Collection<String> options = OcubatorCompiler.collectCompilationOptions(OcubatorCompiler.compile());
+        assertTrue(options.isEmpty());
+    }
+
+    @Test
     public void instantiateGeneratedClass() throws Exception {
         CompilationResult result = OcubatorCompiler.compile()
                 .sourceCode(

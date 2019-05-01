@@ -5,7 +5,6 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -61,6 +60,11 @@ public class OcubatorCompiler implements TaskCompiler {
     }
 
     static Collection<String> collectCompilationOptions(final CompilationTask task) {
-        return Arrays.asList("-sourcepath", String.join(";", task.sourcePathList));
+        final List<String> result = new ArrayList<>();
+        if (!task.sourcePathList.isEmpty()) {
+            result.add("-sourcepath");
+            result.add(String.join(";", task.sourcePathList));
+        }
+        return result;
     }
 }
